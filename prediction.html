@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Disaster Prediction System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-500 to-indigo-700 font-sans text-gray-800 text-gray-100">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-indigo-800 to-blue-600 text-white p-8 text-center mb-6 rounded-b-xl shadow-lg">
+        <h1 class="text-4xl font-bold">🌪️ Advanced Disaster Prediction System 🌊</h1>
+        <p class="mt-4 text-xl">Predict disaster risks with advanced data analytics</p>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-6 bg-white rounded-lg shadow-lg max-w-xl">
+        <h2 class="text-2xl font-semibold mb-4 text-center text-gray-800">Enter Data for Prediction</h2>
+        <form id="predictionForm" class="space-y-6">
+            <!-- Location -->
+            <div>
+                <label for="location" class="block text-sm font-medium text-gray-600">Location</label>
+                <input type="text" id="location" name="location" required
+                       class="w-full mt-2 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-400">
+            </div>
+
+            <!-- Temperature -->
+            <div>
+                <label for="temperature" class="block text-sm font-medium text-gray-600">Temperature (°C)</label>
+                <input type="number" id="temperature" name="temperature" required
+                       class="w-full mt-2 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-400">
+            </div>
+
+            <!-- Humidity -->
+            <div>
+                <label for="humidity" class="block text-sm font-medium text-gray-600">Humidity (%)</label>
+                <input type="number" id="humidity" name="humidity" required
+                       class="w-full mt-2 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-400">
+            </div>
+
+            <!-- Precipitation -->
+            <div>
+                <label for="precipitation" class="block text-sm font-medium text-gray-600">Precipitation (mm)</label>
+                <input type="number" id="precipitation" name="precipitation" required
+                       class="w-full mt-2 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-400">
+            </div>
+
+            <!-- Wind Speed -->
+            <div>
+                <label for="windSpeed" class="block text-sm font-medium text-gray-600">Wind Speed (km/h)</label>
+                <input type="number" id="windSpeed" name="windSpeed" required
+                       class="w-full mt-2 border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-400">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                    class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-lg font-semibold tracking-wide shadow-lg hover:bg-blue-700 transition duration-200">🌍 Predict Disaster</button>
+        </form>
+    </div>
+
+    <!-- Prediction Result -->
+    <div id="predictionResult" class="container mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg max-w-xl hidden">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Prediction Result</h2>
+        <p id="resultMessage" class="text-lg"></p>
+        <div id="riskLevel" class="mt-4 p-4 text-center rounded-lg font-bold text-lg"></div>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Get input values
+            const location = document.getElementById('location').value;
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const humidity = parseFloat(document.getElementById('humidity').value);
+            const precipitation = parseFloat(document.getElementById('precipitation').value);
+            const windSpeed = parseFloat(document.getElementById('windSpeed').value);
+
+            // Enhanced prediction logic
+            let prediction = "No significant disaster predicted.";
+            let riskLevel = "";
+            let colorClass = "bg-green-200 text-green-800";
+
+            if (temperature > 40 && humidity > 60) {
+                prediction = "Heatwave alert for " + location;
+                riskLevel = "High Risk";
+                colorClass = "bg-red-200 text-red-800";
+            } else if (precipitation > 120 && humidity > 80) {
+                prediction = "Flooding risk at " + location;
+                riskLevel = "Moderate to High Risk";
+                colorClass = "bg-orange-200 text-orange-800";
+            } else if (windSpeed > 70) {
+                prediction = "Strong winds or storm risk in " + location;
+                riskLevel = "Moderate Risk";
+                colorClass = "bg-yellow-200 text-yellow-800";
+            }
+
+            // Display the result with dynamic styling
+            document.getElementById('resultMessage').innerText = prediction;
+            document.getElementById('riskLevel').innerText = `Risk Level: ${riskLevel}`;
+            document.getElementById('riskLevel').className = `mt-4 p-4 text-center rounded-lg font-bold text-lg ${colorClass}`;
+            document.getElementById('predictionResult').classList.remove('hidden');
+        });
+    </script>
+
+</body>
+</html>
